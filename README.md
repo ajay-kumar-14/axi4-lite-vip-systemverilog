@@ -21,21 +21,19 @@ The environment verifies read and write transactions and checks protocol correct
 
 ## Verification Architecture
 
-Generator -> Driver -> DUT
-
-                 |
-                 v
-
-             Monitor
-
-            /       \
-
-     Scoreboard   Coverage
-
-                 |
-                 v
-
-         Protocol Checks
+Generator
+    |
+    v
+Driver -----> DUT (AXI4-Lite Slave)
+    |
+    v
+Monitor
+   / \
+  /   \
+Scoreboard  Coverage
+      |
+      v
+Protocol Checker + Assertions
 
 ---
 
@@ -48,6 +46,29 @@ Generator -> Driver -> DUT
 * Protocol checker implementation
 * Mailbox-based component communication
 * Self-checking testbench
+
+## Verification Components
+
+### Generator
+Creates randomized AXI4-Lite read and write transactions.
+
+### Driver
+Converts transactions into pin-level AXI bus activity.
+
+### Monitor
+Captures DUT activity and reconstructs transactions.
+
+### Scoreboard
+Checks DUT responses and validates correctness.
+
+### Functional Coverage
+Tracks exercised addresses, transaction types, and responses.
+
+### Protocol Checker
+Verifies AXI4-Lite protocol compliance.
+
+### Assertions
+SystemVerilog assertions for protocol verification.
 
 ---
 
